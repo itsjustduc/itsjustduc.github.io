@@ -1,0 +1,94 @@
+<html>
+<head>
+</head>
+<body onLoad="getData()"></body>
+<div class="buttons">
+    <button onclick="random()">Generate</button>
+</div>
+<div id="toggles">
+    
+</div>
+<div id="map">
+    Your map is...
+</div>
+
+
+
+<script>
+
+let categories = []
+let maps = []
+
+async function getData() {
+  const url = "https://raw.githubusercontent.com/slashpeekbot/slashpeekbot.github.io/main/maps/maps.json";
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+
+    maps = await response.json();
+    console.log(maps);
+    
+    for (const element of maps) {
+        if(!categories.includes(element["category"])){
+            categories.push(element["category"]);
+        }}
+    console.log(categories);
+    const buttons = document.getElementById("toggles");
+    for(const el of categories){
+        const but = document.createElement("button");
+        but.classList.add("toggle");
+        but.innerHTML = el;
+        but.id = el
+        but.style.backgroundColor = "#00FF0022";
+        
+        but.setAttribute( "onClick", "javascript: toggle('" + el + "');" );
+        buttons.appendChild(but);
+
+    
+}
+
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+async function toggle(el){
+    //console.log(el)
+    const ell = document.getElementById(el)
+    console.log(ell)
+    if(ell.style.backgroundColor == "rgba(255, 0, 0, 0.133)"){
+        ell.style.backgroundColor = "#00FF0022"
+    } else{
+        console.log("er")
+        ell.style.backgroundColor = "#FF000022"
+    }
+}
+
+async function random() {
+    let div = document.getElementById("map");
+    
+    // Source - https://stackoverflow.com/a/4550514
+    // Posted by Jacob Relkin, modified by community. See post 'Timeline' for change history
+    // Retrieved 2026-07-18, License - CC BY-SA 4.0
+    const a = []
+    for(const el of categories){
+        if(document.getElementById(el).style.backgroundColor == "rgba(0, 255, 0, 0.133)"){
+            a.push(el);
+        }
+    var used_maps = []
+    for(const el of maps){
+        if(a.includes(el["category"])){
+            used_maps.push(el)
+        }
+    }
+    }
+
+    const randomElement = used_maps[Math.floor(Math.random() * used_maps.length)];
+    div.innerHTML = "Your map is " + "<a href='https://www.geoguessr.com/maps/" + randomElement["mapId"]  + "'>" + randomElement["mapName"] + "</a>";
+}
+
+</script>
+</body>
+</html>

@@ -46,6 +46,10 @@
 <input type="number" id="round" name="r" min="1" max="10" value="5"/>
 </div>
 <div style="margin-bottom: 5px;">
+    <label>NCFA Cookie</label>
+<input id="ncfa" name="ncfa"/>
+</div>
+<div style="margin-bottom: 5px;">
     <button onclick="generate()">Generate Challenge</button>
 </div>
 </div>
@@ -150,7 +154,8 @@ async function generate(){
     const response = await fetch("https://corsproxy.io/?url=https://www.geoguessr.com/api/v3/challenges", {
     method: "POST",
     headers: {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    "Cookie": "_ncfa=" + document.getElementById("ncfa").value
   },
     body: JSON.stringify(base)
     });

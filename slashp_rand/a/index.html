@@ -147,13 +147,14 @@ async function generate(){
 
     let base = {"map":map,"timeLimit":time,"forbidMoving":move,"forbidZooming":pan,"forbidRotating":zoom,"accessLevel":1,"challengeType":0,"roundCount":round,"guessMapType":"roadmap"};
 
-    const response = await fetch("https://www.geoguessr.com/api/v3/challenges", {
+    const response = await fetch("https://corsproxy.io/?url=https://www.geoguessr.com/api/v3/challenges", {
     method: "POST",
     headers: {
     "Content-Type": "application/json"
   },
     body: JSON.stringify(base)
     });
+    
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     };

@@ -2,7 +2,7 @@
 // @name        latest game button
 // @namespace   Violentmonkey Scripts
 // @icon        https://www.geoguessr.com/_next/static/media/favicon.bffdd9d3.png
-// @version     1.0.0
+// @version     1.1.0
 //
 // @match       https://*.geoguessr.com/*
 // @grant       none
@@ -20,23 +20,21 @@ async function init(){
     const path = window.location.pathname;
 if(path.includes('/party/lobby/') && document.querySelector("#latestGame") == null) {
     const party = document.querySelector("[class*=party-hud_actions__]")
+    let current = ""
     if(party != null){
         let button;
         if(document.querySelector("latestGame") == null){
 
-            const button = party.firstChild.cloneNode(true)
+            button = party.firstChild.cloneNode(true)
             button.id = "latestGame"
             const img = button.querySelector(":scope  > button > img");
             img.src = "https://itsjustduc.github.io/gamemode-stats.png";
             img.srcset = "https://itsjustduc.github.io/gamemode-stats.png";
             party.insertBefore(button, party.firstChild)
-            button.addEventListener("click",function(){
-                open(latest)
-            })
     }
 
        else{
-        const button = document.querySelector("latestGame")
+        button = document.querySelector("latestGame")
        }
 
        let latest = ""
@@ -49,14 +47,16 @@ if(path.includes('/party/lobby/') && document.querySelector("#latestGame") == nu
        const maps = await response.json();
        const payload = JSON.parse(maps["entries"][0]["payload"])
        console.log(payload)
-       if(payload[0]["type"] == 7){
+       if(maps["entries"][0]["type"] == 7){
         latest = payload[0]["payload"]["gameId"]
        }
        else{
         latest = payload["gameId"]
        }
-       console.log(latest)
        latest = "https://geoguessr.com/team-duels/" + latest + "/summary"
+       button.addEventListener("click",function(){
+                open(latest)
+            })
        
     }
     

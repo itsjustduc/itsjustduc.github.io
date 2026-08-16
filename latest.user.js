@@ -7,8 +7,8 @@
 // @match       https://*.geoguessr.com/*
 // @grant       none
 //
-// @author      -
-// @description
+// @author      duc 
+// @description fetch the latest duel party link while in the lobby
 // ==/UserScript==
 
 const prev_url = ""
